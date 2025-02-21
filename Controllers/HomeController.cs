@@ -7,6 +7,11 @@ namespace WebApplication1.Controllers;
 
 public class HomeController : Controller
 {
+    private Mission06Context _context;
+    public HomeController(Mission06Context temp) //constructor
+    {
+        _context = temp;
+    }
 
     public IActionResult Index()
     {
@@ -26,6 +31,9 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult EnterMovies(Application response)
     {
-        return View("Confirmation");
+        _context.Applications.Add(response); //add record to Database
+        _context.SaveChanges();
+        
+        return View("Confirmation", response);
     }
 }
